@@ -1,0 +1,436 @@
+basePath: /
+definitions:
+  criteria.AuthCriteria:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  criteria.StoreRoleCriteria:
+    properties:
+      createdBy:
+        type: string
+      description:
+        type: string
+      roleName:
+        type: string
+    required:
+    - createdBy
+    - description
+    - roleName
+    type: object
+  criteria.StoreUserCriteria:
+    properties:
+      address:
+        type: string
+      createdBy:
+        type: string
+      email:
+        type: string
+      fullname:
+        type: string
+      hpNumber:
+        type: string
+      idMasterRoles:
+        type: string
+      isGender:
+        type: string
+      username:
+        type: string
+    required:
+    - address
+    - createdBy
+    - email
+    - fullname
+    - hpNumber
+    - idMasterRoles
+    - isGender
+    - username
+    type: object
+  criteria.UpdateIsActiveRoleCriteria:
+    properties:
+      idMasterRoles:
+        type: string
+      isActive:
+        type: string
+      updatedBy:
+        type: string
+    required:
+    - idMasterRoles
+    - isActive
+    - updatedBy
+    type: object
+  criteria.UpdateIsActiveUserCriteria:
+    properties:
+      idMasterUsers:
+        type: string
+      isActive:
+        type: string
+      updatedBy:
+        type: string
+    required:
+    - idMasterUsers
+    - isActive
+    - updatedBy
+    type: object
+  criteria.UpdateRoleCriteria:
+    properties:
+      description:
+        type: string
+      idMasterRoles:
+        type: string
+      roleName:
+        type: string
+      updatedBy:
+        type: string
+    required:
+    - description
+    - idMasterRoles
+    - roleName
+    - updatedBy
+    type: object
+  criteria.UpdateUserCriteria:
+    properties:
+      address:
+        type: string
+      email:
+        type: string
+      fullname:
+        type: string
+      hpNumber:
+        type: string
+      idMasterRoles:
+        type: string
+      idMasterUsers:
+        type: string
+      isGender:
+        type: string
+      updatedBy:
+        type: string
+      username:
+        type: string
+    required:
+    - address
+    - email
+    - fullname
+    - hpNumber
+    - idMasterRoles
+    - idMasterUsers
+    - isGender
+    - updatedBy
+    - username
+    type: object
+  criteria.UserSearchCriteria:
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+    required:
+    - key
+    - value
+    type: object
+  result.ResponseResult:
+    properties:
+      responseCode:
+        type: integer
+      responseDatas: {}
+      responseDescription:
+        type: string
+      responseTime:
+        type: string
+    type: object
+host: localhost:5000
+info:
+  contact:
+    email: fiber@swagger.io
+    name: API Support
+  description: Baseline project using Go Fiber
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Go Fiber Clean Architecture
+  version: 1.0.0
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: authenticate user.
+      parameters:
+      - description: Request Body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/criteria.AuthCriteria'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.ResponseResult'
+      summary: authenticate user
+      tags:
+      - Authenticate user
+  /role:
+    get:
+      consumes:
+      - application/json
+      description: Get all exists roles.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.ResponseResult'
+      security:
+      - JWT: []
+      summary: get all exists roles
+      tags:
+      - Role
+  /role/create:
+    post:
+      consumes:
+      - application/json
+      description: create role.
+      parameters:
+      - description: Request Body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/criteria.StoreRoleCriteria'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.ResponseResult'
+      security:
+      - JWT: []
+      summary: create role
+      tags:
+      - Role
+  /role/getDataById/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get one exists role.
+      parameters:
+      - description: role Id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.ResponseResult'
+      security:
+      - JWT: []
+      summary: get one exists role
+      tags:
+      - Role
+  /role/update:
+    post:
+      consumes:
+      - application/json
+      description: update one exists role.
+      parameters:
+      - description: Request Body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/criteria.UpdateRoleCriteria'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.ResponseResult'
+      security:
+      - JWT: []
+      summary: update one exists role
+      tags:
+      - Role
+  /role/updateIsActive:
+    post:
+      consumes:
+      - application/json
+      description: update isactive one exists role.
+      parameters:
+      - description: Request Body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/criteria.UpdateIsActiveRoleCriteria'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.ResponseResult'
+      security:
+      - JWT: []
+      summary: update isactive one exists role
+      tags:
+      - Role
+  /user:
+    get:
+      consumes:
+      - application/json
+      description: Get all exists users.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.ResponseResult'
+      security:
+      - JWT: []
+      summary: get all exists users
+      tags:
+      - User
+  /user/create:
+    post:
+      consumes:
+      - application/json
+      description: create user.
+      parameters:
+      - description: Request Body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/criteria.StoreUserCriteria'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.ResponseResult'
+      security:
+      - JWT: []
+      summary: create user
+      tags:
+      - User
+  /user/getAllDataUserByParam:
+    post:
+      consumes:
+      - application/json
+      description: Get all exists user by param.
+      parameters:
+      - description: Request Body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/criteria.UserSearchCriteria'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.ResponseResult'
+      security:
+      - JWT: []
+      summary: get all exists user by param
+      tags:
+      - User
+  /user/getDataById/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get one exists user.
+      parameters:
+      - description: user Id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.ResponseResult'
+      security:
+      - JWT: []
+      summary: get one exists user
+      tags:
+      - User
+  /user/update:
+    post:
+      consumes:
+      - application/json
+      description: update one exists user.
+      parameters:
+      - description: Request Body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/criteria.UpdateUserCriteria'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.ResponseResult'
+      security:
+      - JWT: []
+      summary: update one exists user
+      tags:
+      - User
+  /user/updateIsActive:
+    post:
+      consumes:
+      - application/json
+      description: update isactive one exists user.
+      parameters:
+      - description: Request Body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/criteria.UpdateIsActiveUserCriteria'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.ResponseResult'
+      security:
+      - JWT: []
+      summary: update isactive one exists user
+      tags:
+      - User
+schemes:
+- http
+- https
+securityDefinitions:
+  JWT:
+    description: Authorization For JWT
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
