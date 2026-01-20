@@ -1,0 +1,3 @@
+{"@timestamp":"2026-01-20T06:46:22+07:00","level":"info","message":"Input validation failed: user not found"}
+{"@timestamp":"2026-01-20T06:48:03+07:00","level":"info","message":"Input validation failed: decode input text is error. error: illegal base64 data at input byte 1"}
+{"@timestamp":"2026-01-20T06:48:59+07:00","level":"info","message":"Input validation failed: decode input text is error. error: illegal base64 data at input byte 1"}

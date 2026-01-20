@@ -26,12 +26,6 @@ const (
 	UNAUTHORIZED  = "Ooopsss Unauthorized ....."
 	GENERAL_ERROR = "Ooopsss General Error ....."
 
-	INVALID_ROLE = "Invalid Role"
-	SUCCESS      = "Success"
-
-	ACTIVED   = "ACTIVED"
-	DEACTIVED = "DEACTIVED"
-
 	SUCCESSFULLY_ADD    = "Successfully Add"
 	SUCCESSFULLY_UPDATE = "Successfully Update"
 	SUCCESSFULLY_DELETE = "Successfully Delete"

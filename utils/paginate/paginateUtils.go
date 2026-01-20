@@ -79,8 +79,8 @@ func prepareSortDirection(param string) string {
 
 func PrepareStatusValues(statusList []string) ([]string, error) {
 	statusMap := map[string]string{
-		"ACTIVED":   constant.ACTIVED,
-		"DEACTIVED": constant.DEACTIVED,
+		"ACTIVE":    constant.ACTIVE,
+		"NONACTIVE": constant.NONACTIVE,
 	}
 
 	var statusValues []string

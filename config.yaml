@@ -1,0 +1,116 @@
+appName: bara-playdate-api
+serverPort: 0.0.0.0:8081
+environment: prod # dev/qa/uat/prod
+releaseMode: y # y / n
+
+# LOG DIRECTORY
+logDirectory:
+  dev: 
+    path: /logs/
+  qa: 
+    path: /logs/
+  uat: 
+    path: /logs/
+  prod: 
+    path: /logs/
+
+    
+# ROUTE NAME
+redis:
+  dev:
+    host: localhost
+    port: 6379
+    maxSize: 10
+    minIdleSize: 5
+  qa:
+    host: localhost
+    port: 6379
+    maxSize: 10
+    minIdleSize: 5
+  uat:
+    host: localhost
+    port: 6379
+    maxSize: 10
+    minIdleSize: 5
+  prod:
+    host: localhost
+    port: 6379
+    maxSize: 10
+    minIdleSize: 5 
+
+# DATABASE CONFIG
+database:
+  dev: 
+    connection: postgres
+    username: postgres
+    password: p@ssw0rd
+    url: 127.0.0.1
+    port: 5432 
+    schema: bara_playdate
+    maxPoolOpen: 10
+    maxPoolIdle: 5
+    maxPollLifeTime: 30000
+  qa: 
+    connection: postgres
+    username: postgres
+    password: p@ssw0rd
+    url: 127.0.0.1
+    port: 5432 
+    schema: bara_playdate
+    maxPoolOpen: 10
+    maxPoolIdle: 5
+    maxPollLifeTime: 30000
+  uat: 
+    connection: postgres
+    username: postgres
+    password: p@ssw0rd
+    url: 127.0.0.1
+    port: 5432 
+    schema: bara_playdate
+    maxPoolOpen: 10
+    maxPoolIdle: 5
+    maxPollLifeTime: 30000
+  prod: 
+    connection: postgres
+    username: postgres
+    password: p@ssw0rd
+    url: 127.0.0.1
+    port: 5432 
+    schema: bara_playdate
+    maxPoolOpen: 10
+    maxPoolIdle: 5
+    maxPollLifeTime: 30000
+
+# KEY ACCESS
+key:
+  dev: 
+    apiKey: w3bS3rv1c3ByBws120491
+    apiKeyEncode: dzNiUzNydjFjM0J5QndzMTIwNDkx
+    signatureKey: B4cK3nD-st4t3Rk1T
+    signatureKeyEncode: QjRjSzNuRC1zdDR0M1JrMVQ=
+  qa: 
+    apiKey: w3bS3rv1c3ByBws120491
+    apiKeyEncode: dzNiUzNydjFjM0J5QndzMTIwNDkx
+    signatureKey: B4cK3nD-st4t3Rk1T
+    signatureKeyEncode: QjRjSzNuRC1zdDR0M1JrMVQ=  
+  uat: 
+    apiKey: w3bS3rv1c3ByBws120491
+    apiKeyEncode: dzNiUzNydjFjM0J5QndzMTIwNDkx
+    signatureKey: B4cK3nD-st4t3Rk1T
+    signatureKeyEncode: QjRjSzNuRC1zdDR0M1JrMVQ=  
+  prod: 
+    apiKey: w3bS3rv1c3ByBws120491
+    apiKeyEncode: dzNiUzNydjFjM0J5QndzMTIwNDkx
+    signatureKey: B4cK3nD-st4t3Rk1T
+    signatureKeyEncode: QjRjSzNuRC1zdDR0M1JrMVQ=  
+
+# ROUTE NAME
+route:
+  dev:
+    name: /dev/api/v1/bara-playdate-api
+  qa:
+    name: /qc/api/v1/bara-playdate-api
+  uat:
+    name: /uat/api/v1/bara-playdate-api
+  prod:
+    name: /api/v1/bara-playdate-api

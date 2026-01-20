@@ -1,10 +1,10 @@
 package utils
 
 import (
-	"bara-playdate-api/constant"
-	"bara-playdate-api/model"
-	"log"
+	"fmt"
 	"time"
+
+	"github.com/spf13/viper"
 )
 
 type Config struct {
@@ -35,65 +35,62 @@ type Config struct {
 	Route              string
 }
 
-func NewEnv(cfg *model.ConsulConfigReq) Config {
-
-	configFromConsul, err := ExportConfigFromConsul(cfg)
-	if err != nil {
-		log.Fatalf("Error loading config from Consul: %v", err)
-	}
-
-	// keyValues, err := ExportConfigFromConsul()
-	// if err != nil {
-	// 	log.Fatalf("Failed to get all keys and values: %v", err)
-	// }
-
-	// configFromConsul, err := UnmarshalConfig(keyValues)
-	// if err != nil {
-	// 	log.Fatalf("Failed to unmarshal config: %v", err)
-	// }
-
+func NewEnv() Config {
 	var config Config
 
-	config.AppName = configFromConsul.AppName
-	config.ServerPort = configFromConsul.ServerPort
-	config.Environment = configFromConsul.Environment
+	viper.SetConfigFile("yaml")
+	viper.AddConfigPath("./")
+	viper.SetConfigName("config")
 
-	config.LogDirectory = configFromConsul.LogDirectory + " bara-playdate-api " + time.Now().Format("02-Jan-2006") + ".log"
+	if errData := viper.ReadInConfig(); errData != nil {
+		fmt.Printf("Error reading config file, %s", errData)
+	}
 
-	dbConnection, _ := DecryptAes256Sha256([]byte(configFromConsul.DbConnection), constant.KEY_AES)
+	config.AppName = viper.GetString("appName")
+	config.ServerPort = viper.GetString("serverPort")
+	config.Environment = viper.GetString("environment")
+	if viper.GetString("releaseMode") == "y" || viper.GetString("releaseMode") == "Y" {
+		config.AppMode = "release"
+	} else {
+		config.AppMode = "debug"
+	}
+	config.LogDirectory = viper.GetString("logDirectory."+config.Environment+".path") + " go-gin-clean-architecture " + time.Now().Format("02-Jan-2006") + ".log"
+
+	dbConnection := viper.GetString("database." + config.Environment + ".connection")
 	config.DbConnection = string(dbConnection)
-	dbSchema, _ := DecryptAes256Sha256([]byte(configFromConsul.DbSchema), constant.KEY_AES)
+	dbSchema := viper.GetString("database." + config.Environment + ".schema")
 	config.DbSchema = string(dbSchema)
-	dbUsername, _ := DecryptAes256Sha256([]byte(configFromConsul.DbUsername), constant.KEY_AES)
+	dbUsername := viper.GetString("database." + config.Environment + ".username")
 	config.DbUsername = string(dbUsername)
-	dbPassword, _ := DecryptAes256Sha256([]byte(configFromConsul.DbPassword), constant.KEY_AES)
+	dbPassword := viper.GetString("database." + config.Environment + ".password")
 	config.DbPassword = string(dbPassword)
-	dbUrl, _ := DecryptAes256Sha256([]byte(configFromConsul.DbUrl), constant.KEY_AES)
+	dbUrl := viper.GetString("database." + config.Environment + ".url")
 	config.DbUrl = string(dbUrl)
-	dbPort, _ := DecryptAes256Sha256([]byte(configFromConsul.DbPort), constant.KEY_AES)
+	dbPort := viper.GetString("database." + config.Environment + ".port")
 	config.DbPort = string(dbPort)
-	dbMaxPoolOpen, _ := DecryptAes256Sha256([]byte(configFromConsul.DbMaxPoolOpen), constant.KEY_AES)
+
+	dbMaxPoolOpen := viper.GetString("database." + config.Environment + ".maxPoolOpen")
 	config.DbMaxPoolOpen = string(dbMaxPoolOpen)
-	dbMaxPoolIdle, _ := DecryptAes256Sha256([]byte(configFromConsul.DbMaxPoolIdle), constant.KEY_AES)
+	dbMaxPoolIdle := viper.GetString("database." + config.Environment + ".maxPoolIdle")
 	config.DbMaxPoolIdle = string(dbMaxPoolIdle)
-	dbMaxPollLifeTime, _ := DecryptAes256Sha256([]byte(configFromConsul.DbMaxPollLifeTime), constant.KEY_AES)
+	dbMaxPollLifeTime := viper.GetString("database." + config.Environment + ".maxPollLifeTime")
 	config.DbMaxPollLifeTime = string(dbMaxPollLifeTime)
 
-	redisHost, _ := DecryptAes256Sha256([]byte(configFromConsul.RedisHost), constant.KEY_AES)
+	redisHost := viper.GetString("redis." + config.Environment + ".host")
 	config.RedisHost = string(redisHost)
-	redisPort, _ := DecryptAes256Sha256([]byte(configFromConsul.RedisPort), constant.KEY_AES)
+	redisPort := viper.GetString("redis." + config.Environment + ".port")
 	config.RedisPort = string(redisPort)
-	redisMaxSize, _ := DecryptAes256Sha256([]byte(configFromConsul.RedisMaxSize), constant.KEY_AES)
+	redisMaxSize := viper.GetString("redis." + config.Environment + ".maxSize")
 	config.RedisMaxSize = string(redisMaxSize)
-	redisMinIdleSize, _ := DecryptAes256Sha256([]byte(configFromConsul.RedisMinIdleSize), constant.KEY_AES)
+	redisMinIdleSize := viper.GetString("redis." + config.Environment + ".minIdleSize")
 	config.RedisMinIdleSize = string(redisMinIdleSize)
 
-	config.ApiKey = configFromConsul.ApiKey
-	config.ApiKeyEncode = configFromConsul.ApiKeyEncode
-	config.SignatureKey = configFromConsul.SignatureKey
-	config.SignatureKeyEncode = configFromConsul.SignatureKeyEncode
+	config.ApiKey = viper.GetString("key." + config.Environment + ".apiKey")
+	config.ApiKeyEncode = viper.GetString("key." + config.Environment + ".apiKeyEncode")
+	config.SignatureKey = viper.GetString("key." + config.Environment + ".signatureKey")
+	config.SignatureKeyEncode = viper.GetString("key." + config.Environment + ".signatureKeyEncode")
 
-	config.Route = configFromConsul.Route
+	config.Route = viper.GetString("route." + config.Environment + ".name")
 
 	return config
 }
